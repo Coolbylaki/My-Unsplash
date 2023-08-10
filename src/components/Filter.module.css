@@ -1,0 +1,32 @@
+.container {
+	display: inline-block;
+	position: relative;
+}
+
+.ico {
+	position: absolute;
+	left: -2rem;
+	top: 1.05rem;
+	color: #333;
+}
+
+.container div h3 {
+	color: #333;
+	font-family: "Noto Sans", sans-serif;
+	font-size: 0.875rem;
+	font-weight: 800;
+	line-height: normal;
+}
+
+.container div p {
+	color: #333;
+	font-family: "Noto Sans", sans-serif;
+	font-size: 0.5625rem;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.main {
+	display: flex;
+	align-items: center;
+}
