@@ -1,5 +1,7 @@
-import { MouseEvent, useEffect, useRef } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import styles from "./DialogModal.module.css";
+
+const API = "https://my-unsplash-api-pi.vercel.app/photos";
 
 const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {
 	const r = element.getBoundingClientRect();
@@ -20,6 +22,9 @@ type Props = {
 
 const DialogModal = ({ title, isOpened, onClose }: Props) => {
 	const ref = useRef<HTMLDialogElement>(null);
+	const [labelValue, setLabelValue] = useState("");
+	const [photoUrlValue, setPhotoUrlValue] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		if (isOpened) {
@@ -31,8 +36,28 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 		}
 	}, [isOpened]);
 
-	const proceedAndClose = () => {
-		onClose();
+	const proceedAndClose = async () => {
+		const urlPattern = /(https?:\/\/.*\.(?:png|jpg|jpeg|svg))/i;
+		if (urlPattern.test(photoUrlValue) && labelValue.trim() !== "") {
+			setIsLoading(true);
+			await fetch(API, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					url: photoUrlValue,
+					label: labelValue,
+				}),
+			});
+			setIsLoading(false);
+
+			onClose();
+			setLabelValue("");
+			setPhotoUrlValue("");
+		} else {
+			alert("Your URL must end with jpg or png and label must be present!");
+		}
 	};
 
 	return (
@@ -47,18 +72,26 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 
 			<form>
 				<label htmlFor="label">Label</label>
-				<input type="text" id="label" placeholder="Enter a label" />
+				<input
+					type="text"
+					id="label"
+					placeholder="Enter a label"
+					value={labelValue}
+					onChange={(e) => setLabelValue(e.target.value)}
+				/>
 				<label htmlFor="photo-url">Photo URL</label>
 				<input
 					type="text"
 					id="photo-url"
-					placeholder="https://images.unsplash.com/photo-1584395630827-860eee694d7b?ixlib=r..."
+					value={photoUrlValue}
+					placeholder="Your image must end in png or jpg"
+					onChange={(e) => setPhotoUrlValue(e.target.value)}
 				/>
 			</form>
 
 			<div className={styles.buttons}>
 				<button onClick={onClose}>Cancel</button>
-				<button onClick={proceedAndClose}>Submit</button>
+				<button onClick={proceedAndClose}>{isLoading ? "Updating..." : "Submit"}</button>
 			</div>
 		</dialog>
 	);
