@@ -25,6 +25,7 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 	const [labelValue, setLabelValue] = useState("");
 	const [photoUrlValue, setPhotoUrlValue] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [inputsValid, setInputsValid] = useState(true);
 
 	useEffect(() => {
 		if (isOpened) {
@@ -40,6 +41,7 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 		const urlPattern = /(https?:\/\/.*\.(?:png|jpg|jpeg|svg))/i;
 		if (urlPattern.test(photoUrlValue) && labelValue.trim() !== "") {
 			setIsLoading(true);
+			setInputsValid(true);
 			await fetch(API, {
 				method: "POST",
 				headers: {
@@ -56,7 +58,7 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 			setLabelValue("");
 			setPhotoUrlValue("");
 		} else {
-			alert("Your URL must end with jpg or png and label must be present!");
+			setInputsValid(false);
 		}
 	};
 
@@ -70,7 +72,7 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 			}>
 			<h3>{title}</h3>
 
-			<form>
+			<form className={inputsValid ? styles.valid : styles.invalid}>
 				<label htmlFor="label">Label</label>
 				<input
 					type="text"

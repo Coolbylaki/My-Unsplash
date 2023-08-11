@@ -41,7 +41,6 @@
 }
 
 .container form label::placeholder {
-	color: #bdbdbd;
 	font-family: "Noto Sans", sans-serif;
 	font-size: 0.875rem;
 	font-weight: 500;
@@ -51,7 +50,6 @@
 .container form input {
 	padding: 1.15rem;
 	border-radius: 0.75rem;
-	border: 1px solid #4f4f4f;
 	box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.1);
 	width: 34.5rem;
 }
@@ -84,4 +82,20 @@
 	font-size: 1rem;
 	font-weight: 700;
 	cursor: pointer;
+}
+
+.invalid input {
+	border: 1px solid red;
+}
+
+.valid input {
+	border: 1px solid #4f4f4f;
+}
+
+.invalid input::placeholder {
+	color: red;
+}
+
+.valid input::placeholder {
+	color: #bdbdbd;
 }
