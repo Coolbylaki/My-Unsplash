@@ -11,3 +11,9 @@
 	font-family: "Noto Sans", sans-serif;
 	cursor: pointer;
 }
+
+@media screen and (max-width: 640px) {
+	.btn {
+		width: 100%;
+	}
+}

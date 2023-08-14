@@ -2,3 +2,10 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+@media screen and (max-width: 640px) {
+	.nav {
+		flex-direction: column;
+		gap: 1rem;
+	}
+}
