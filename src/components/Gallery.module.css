@@ -1,0 +1,21 @@
+.gallery {
+	width: 85vw;
+	margin: 2rem auto;
+}
+
+.card {
+	columns: 4 16rem;
+	gap: 3rem;
+}
+
+.card img {
+	width: 100%;
+	border-radius: 1rem;
+	margin-bottom: 3rem;
+	transform: 0.2s ease-in-out;
+}
+
+.card img:hover {
+	transform: scale(1.05);
+	cursor: pointer;
+}

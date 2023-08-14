@@ -11,9 +11,7 @@ function App() {
 				<Filter />
 				<AddPhoto />
 			</nav>
-			<main>
-				<Gallery />
-			</main>
+			<Gallery />
 		</>
 	);
 }
