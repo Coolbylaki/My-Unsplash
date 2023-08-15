@@ -95,7 +95,7 @@ const DialogModal = ({ title, isOpened, onClose, setNewPhoto }: Props) => {
 				<input
 					type="text"
 					id="label"
-					placeholder="Enter a label"
+					placeholder="Enter a short label"
 					value={labelValue}
 					onChange={(e) => setLabelValue(e.target.value)}
 				/>
@@ -104,7 +104,7 @@ const DialogModal = ({ title, isOpened, onClose, setNewPhoto }: Props) => {
 					type="text"
 					id="photo-url"
 					value={photoUrlValue}
-					placeholder="Your image must end in png or jpg"
+					placeholder="Your image must end in png, jpg or jpeg"
 					onChange={(e) => setPhotoUrlValue(e.target.value)}
 				/>
 			</form>
