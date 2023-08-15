@@ -40,8 +40,28 @@ export default function Gallery(props: Props) {
 		}));
 	};
 
-	const handleDeleteBtn = (imageId: string) => {
-		console.log("clicked", imageId);
+	const handleDeleteBtn = async (imageId: string) => {
+		try {
+			const response = await fetch(`${API_ENDPOINT}/${imageId}`, {
+				method: "DELETE",
+			});
+
+			if (response.ok) {
+				// If delete request is successful, update state to remove the image
+				const updatedImages = images.filter((image) => image.id !== imageId);
+				setImages(updatedImages);
+
+				// Also update the visibility state to hide the deleted image's button and paragraph
+				setImageVisibility((prevVisibility) => ({
+					...prevVisibility,
+					[imageId]: false,
+				}));
+			} else {
+				console.log("Delete request failed");
+			}
+		} catch (error) {
+			console.error("Error deleting image:", error);
+		}
 	};
 
 	return (
