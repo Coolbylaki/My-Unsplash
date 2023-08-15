@@ -99,3 +99,15 @@
 .valid input::placeholder {
 	color: #bdbdbd;
 }
+
+@media screen and (max-width: 640px) {
+	.container form input {
+		max-width: 20rem;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.container form input {
+		max-width: 16rem;
+	}
+}
