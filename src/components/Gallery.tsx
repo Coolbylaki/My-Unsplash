@@ -12,9 +12,10 @@ type Image = {
 
 type Props = {
 	newPhoto: Image;
+	label: string;
 };
 
-export default function Gallery(props: Props) {
+export default function Gallery({ newPhoto, label }: Props) {
 	const [images, setImages] = useState<Image[]>([]);
 	const [imageVisibility, setImageVisibility] = useState<{ [id: string]: boolean }>({});
 
@@ -28,10 +29,10 @@ export default function Gallery(props: Props) {
 	}, []);
 
 	useEffect(() => {
-		if (props.newPhoto.id) {
-			setImages((prevState) => [props.newPhoto, ...prevState]);
+		if (newPhoto.id) {
+			setImages((prevState) => [newPhoto, ...prevState]);
 		}
-	}, [props.newPhoto]);
+	}, [newPhoto]);
 
 	const toggleImageVisibility = (imageId: string) => {
 		setImageVisibility((prevVisibility) => ({
@@ -67,20 +68,24 @@ export default function Gallery(props: Props) {
 	return (
 		<main className={styles.gallery}>
 			<div className={styles.card}>
-				{images.map((image) => {
-					return (
-						<div
-							className={styles.card__cont}
-							key={image.id}
-							onClick={() => toggleImageVisibility(image.id)}>
-							<img src={image.url} alt={image.label} />
-							{imageVisibility[image.id] && (
-								<button onClick={() => handleDeleteBtn(image.id)}>delete</button>
-							)}
-							{imageVisibility[image.id] && <p>{image.label}</p>}
-						</div>
-					);
-				})}
+				{images
+					.filter(
+						(image) => image.label.toLowerCase().includes(label.toLowerCase()) // Filter based on label
+					)
+					.map((image) => {
+						return (
+							<div
+								className={styles.card__cont}
+								key={image.id}
+								onClick={() => toggleImageVisibility(image.id)}>
+								<img src={image.url} alt={image.label} />
+								{imageVisibility[image.id] && (
+									<button onClick={() => handleDeleteBtn(image.id)}>delete</button>
+								)}
+								{imageVisibility[image.id] && <p>{image.label}</p>}
+							</div>
+						);
+					})}
 			</div>
 		</main>
 	);

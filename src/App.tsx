@@ -12,6 +12,7 @@ type Image = {
 };
 
 function App() {
+	const [label, setLabel] = useState("");
 	const [newPhoto, setNewPhoto] = useState<Image>({
 		id: "",
 		url: "",
@@ -21,10 +22,10 @@ function App() {
 	return (
 		<>
 			<nav className={styles.nav}>
-				<Filter />
+				<Filter setLabel={setLabel} />
 				<AddPhoto setPhoto={setNewPhoto} />
 			</nav>
-			<Gallery newPhoto={newPhoto} />
+			<Gallery newPhoto={newPhoto} label={label} />
 		</>
 	);
 }

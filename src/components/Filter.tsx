@@ -1,7 +1,11 @@
 import Search from "./Search";
 import styles from "./Filter.module.css";
 
-export default function Filter() {
+type Props = {
+	setLabel: (label: string) => void;
+};
+
+export default function Filter({ setLabel }: Props) {
 	return (
 		<section className={styles.main}>
 			<aside className={styles.container}>
@@ -10,7 +14,7 @@ export default function Filter() {
 					<p>devchallenges.io</p>
 				</div>
 			</aside>
-			<Search />
+			<Search setLabel={setLabel} />
 		</section>
 	);
 }
