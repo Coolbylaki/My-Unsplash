@@ -10,7 +10,11 @@ type Image = {
 	label: string;
 };
 
-export default function Gallery() {
+type Props = {
+	newPhoto: Image;
+};
+
+export default function Gallery(props: Props) {
 	const [images, setImages] = useState<Image[]>([]);
 
 	useEffect(() => {
@@ -21,6 +25,12 @@ export default function Gallery() {
 		};
 		fetchImages();
 	}, []);
+
+	useEffect(() => {
+		if (props.newPhoto.id) {
+			setImages((prevState) => [props.newPhoto, ...prevState]);
+		}
+	}, [props.newPhoto]);
 
 	return (
 		<main className={styles.gallery}>

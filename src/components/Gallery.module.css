@@ -5,13 +5,13 @@
 
 .card {
 	columns: 4 16rem;
-	gap: 3rem;
+	gap: 2rem;
 }
 
 .card img {
 	width: 100%;
 	border-radius: 1rem;
-	margin-bottom: 3rem;
+	margin-bottom: 2rem;
 	transform: 0.2s ease-in-out;
 }
 

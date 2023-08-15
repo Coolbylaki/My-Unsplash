@@ -14,13 +14,20 @@ const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {
 	);
 };
 
+type Image = {
+	id: string;
+	url: string;
+	label: string;
+};
+
 type Props = {
 	title: string;
 	isOpened: boolean;
 	onClose: () => void;
+	setNewPhoto: (img: Image) => void;
 };
 
-const DialogModal = ({ title, isOpened, onClose }: Props) => {
+const DialogModal = ({ title, isOpened, onClose, setNewPhoto }: Props) => {
 	const ref = useRef<HTMLDialogElement>(null);
 	const [labelValue, setLabelValue] = useState("");
 	const [photoUrlValue, setPhotoUrlValue] = useState("");
@@ -42,18 +49,29 @@ const DialogModal = ({ title, isOpened, onClose }: Props) => {
 		if (urlPattern.test(photoUrlValue) && labelValue.trim() !== "") {
 			setIsLoading(true);
 			setInputsValid(true);
-			await fetch(API, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					url: photoUrlValue,
-					label: labelValue,
-				}),
-			});
-			setIsLoading(false);
+			try {
+				const response = await fetch(API, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						url: photoUrlValue,
+						label: labelValue,
+					}),
+				});
 
+				if (response.ok) {
+					const photo = await response.json();
+					setNewPhoto(photo.photo);
+				} else {
+					console.error("Error while fetching data:", response.status);
+				}
+			} catch (error) {
+				console.error("An error occurred:", error);
+			}
+
+			setIsLoading(false);
 			onClose();
 			setLabelValue("");
 			setPhotoUrlValue("");

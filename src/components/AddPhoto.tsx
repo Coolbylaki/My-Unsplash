@@ -3,7 +3,17 @@ import DialogModal from "./DialogModal";
 import { useState } from "react";
 import styles from "./AddPhoto.module.css";
 
-const DialogModalTester = () => {
+type Image = {
+	id: string;
+	url: string;
+	label: string;
+};
+
+type Props = {
+	setPhoto: (img: Image) => void;
+};
+
+const DialogModalTester = (props: Props) => {
 	const [isOpened, setIsOpened] = useState(false);
 
 	return (
@@ -15,7 +25,8 @@ const DialogModalTester = () => {
 			<DialogModal
 				title="Add a new photo"
 				isOpened={isOpened}
-				onClose={() => setIsOpened(false)}></DialogModal>
+				onClose={() => setIsOpened(false)}
+				setNewPhoto={props.setPhoto}></DialogModal>
 		</div>
 	);
 };
