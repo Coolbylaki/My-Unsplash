@@ -73,11 +73,11 @@ const PasswordModule = ({ title, isOpened, onClose, handleDelete, imageId }: Pro
 			<h3>{title}</h3>
 
 			<form className={inputsValid ? styles.valid : styles.invalid}>
-				<label htmlFor="label">Label</label>
+				<label htmlFor="password">Password</label>
 				<input
 					type="text"
-					id="label"
-					placeholder="Enter a label"
+					id="password"
+					placeholder="**********"
 					value={labelValue}
 					onChange={onChangeHandler}
 				/>
