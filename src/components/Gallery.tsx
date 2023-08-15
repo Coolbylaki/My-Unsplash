@@ -16,12 +16,13 @@ type Props = {
 
 export default function Gallery(props: Props) {
 	const [images, setImages] = useState<Image[]>([]);
+	const [imageVisibility, setImageVisibility] = useState<{ [id: string]: boolean }>({});
 
 	useEffect(() => {
 		const fetchImages = async () => {
 			const response = await fetch(API_ENDPOINT);
 			const data = await response.json();
-			setImages(data);
+			setImages(data.reverse());
 		};
 		fetchImages();
 	}, []);
@@ -32,11 +33,33 @@ export default function Gallery(props: Props) {
 		}
 	}, [props.newPhoto]);
 
+	const toggleImageVisibility = (imageId: string) => {
+		setImageVisibility((prevVisibility) => ({
+			...prevVisibility,
+			[imageId]: !prevVisibility[imageId],
+		}));
+	};
+
+	const handleDeleteBtn = (imageId: string) => {
+		console.log("clicked", imageId);
+	};
+
 	return (
 		<main className={styles.gallery}>
 			<div className={styles.card}>
 				{images.map((image) => {
-					return <img src={image.url} key={image.id} alt={image.label} />;
+					return (
+						<div
+							className={styles.card__cont}
+							key={image.id}
+							onClick={() => toggleImageVisibility(image.id)}>
+							<img src={image.url} alt={image.label} />
+							{imageVisibility[image.id] && (
+								<button onClick={() => handleDeleteBtn(image.id)}>delete</button>
+							)}
+							{imageVisibility[image.id] && <p>{image.label}</p>}
+						</div>
+					);
 				})}
 			</div>
 		</main>
