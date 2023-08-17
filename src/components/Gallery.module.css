@@ -14,12 +14,11 @@
 	width: 100%;
 	border-radius: 1rem;
 	margin-bottom: 2rem;
-	transform: 0.2s ease-in-out;
+	transition: transform 0.15s ease-in-out;
 }
 
 .card img:hover {
 	transform: scale(1.05);
-	transition-duration: 70ms;
 	cursor: pointer;
 }
 
