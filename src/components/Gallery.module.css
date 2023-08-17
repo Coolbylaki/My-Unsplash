@@ -19,6 +19,7 @@
 
 .card img:hover {
 	transform: scale(1.05);
+	transition-duration: 70ms;
 	cursor: pointer;
 }
 
